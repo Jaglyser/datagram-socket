@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -9,7 +8,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#define SERVERPORT "3490" // the port users will be connecting to
+#define SERVERPORT "3490"
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +23,7 @@ int main(int argc, char *argv[])
     }
 
     memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_INET6; // set to AF_INET to use IPv4
+    hints.ai_family = AF_INET6;
     hints.ai_socktype = SOCK_DGRAM;
 
     if ((rv = getaddrinfo(argv[1], SERVERPORT, &hints, &servinfo)) != 0) {
@@ -32,7 +31,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // loop through all the results and make a socket
     for(p = servinfo; p != NULL; p = p->ai_next) {
         if ((sockfd = socket(p->ai_family, p->ai_socktype,
                         p->ai_protocol)) == -1) {
